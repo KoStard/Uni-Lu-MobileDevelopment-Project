@@ -3,4 +3,9 @@
     <string name="home_page_label">Shopping List</string>
     <string name="add_item_from_home">Add</string>
     <string name="search_recipe_from_home">Search Recipes</string>
+    <string name="add_new_item_page_label">Add New Item</string>
+    <string name="add_or_edit_item_title_hint">Item Name</string>
+    <string name="add_or_edit_item_quantity_default_value">1</string>
+    <string name="add_or_edit_item_details_hint">Details and description</string>
+    <string name="add_item_button">Add</string>
 </resources>
