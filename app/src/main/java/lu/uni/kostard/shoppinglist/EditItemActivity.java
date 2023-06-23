@@ -7,9 +7,16 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import lu.uni.kostard.shoppinglist.storage.MyDatabase;
+import lu.uni.kostard.shoppinglist.storage.ShoppingListItem;
+
 public class EditItemActivity extends AppCompatActivity {
     private int itemId;
 
+    /**
+     * This method is called when the activity is created.
+     * It is responsible for setting up the UI and populating the fields with the item data.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +39,9 @@ public class EditItemActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * This method is called when the user clicks the save button, updates existing item.
+     */
     public void saveItem(View view) {
         EditText titleEditText = findViewById(R.id.itemName);
         String title = titleEditText.getText().toString();
@@ -45,9 +55,18 @@ public class EditItemActivity extends AppCompatActivity {
         item.description = description;
         item.quantity = quantity;
         new Thread(() -> {
-            MyDatabase.getInstance(this).shoppingListDao().update(item);
+            boolean successful;
+            // Handling the exception, in case the item does not exist
+            try {
+                MyDatabase.getInstance(this).shoppingListDao().update(item);
+                successful = true;
+            } catch (Exception e) {
+                e.printStackTrace();
+                successful = false;
+            }
+            String message = successful ? "Item updated" : "Failed to update item";
             runOnUiThread(() -> {
-                Toast.makeText(this, "Item updated", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
                 finish();
             });
         }).start();

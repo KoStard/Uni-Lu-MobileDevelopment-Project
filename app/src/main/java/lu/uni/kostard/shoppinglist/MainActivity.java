@@ -10,6 +10,8 @@ import android.view.View;
 
 import java.util.ArrayList;
 
+import lu.uni.kostard.shoppinglist.storage.MyDatabase;
+
 public class MainActivity extends AppCompatActivity {
     protected RecyclerView mRecyclerView;
     protected ShoppingListRecyclerViewAdapter mAdapter;
@@ -20,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Setting up the RecyclerView
         mRecyclerView = findViewById(R.id.shoppingListRecyclerView);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -30,14 +33,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        // Getting the items from the database and continuously updating the UI when it changes
         MyDatabase.getInstance(this).shoppingListDao().getAllItems().observe(this, items -> {
-//            Use RecyclerView adapter to display items
             System.out.println("Items: " + items);
             mAdapter.setItems(items);
         });
     }
 
-    public void startAddNewItem(View view) {
+    /**
+     * This method is called when the user clicks the add new item button.
+     * It starts the AddNewItemActivity.
+     */
+    public void startAddNewItemActivity(View view) {
         Intent intent = new Intent(this, AddNewItemActivity.class);
         startActivity(intent);
     }

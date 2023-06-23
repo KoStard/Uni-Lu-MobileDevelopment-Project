@@ -1,4 +1,4 @@
-package lu.uni.kostard.shoppinglist;
+package lu.uni.kostard.shoppinglist.storage;
 
 import android.content.Context;
 
@@ -6,6 +6,10 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+/**
+ * This class is the database for the shopping list items.
+ * It is responsible for creating the database and providing the DAO.
+ */
 @Database(entities = ShoppingListItem.class, version = 2)
 public abstract class MyDatabase extends RoomDatabase {
     private static MyDatabase instance;

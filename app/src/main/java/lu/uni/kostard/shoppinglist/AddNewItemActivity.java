@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import lu.uni.kostard.shoppinglist.storage.MyDatabase;
+import lu.uni.kostard.shoppinglist.storage.ShoppingListItem;
+
 public class AddNewItemActivity extends AppCompatActivity {
 
     @Override
@@ -15,6 +18,9 @@ public class AddNewItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_new_item);
     }
 
+    /**+
+     * This method is called when the user clicks the save button, creates new item.
+     */
     public void saveItem(View view) {
         EditText titleEditText = findViewById(R.id.itemName);
         String title = titleEditText.getText().toString();

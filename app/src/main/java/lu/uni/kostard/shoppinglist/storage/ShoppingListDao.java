@@ -1,4 +1,4 @@
-package lu.uni.kostard.shoppinglist;
+package lu.uni.kostard.shoppinglist.storage;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -9,6 +9,9 @@ import androidx.room.Update;
 
 import java.util.List;
 
+/**
+ * This class is the DAO for the shopping list items.
+ */
 @Dao
 public interface ShoppingListDao {
     @Insert
