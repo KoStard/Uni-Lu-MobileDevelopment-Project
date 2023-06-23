@@ -6,7 +6,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = ShoppingListItem.class, version = 1)
+@Database(entities = ShoppingListItem.class, version = 2)
 public abstract class MyDatabase extends RoomDatabase {
     private static MyDatabase instance;
     public abstract ShoppingListDao shoppingListDao();
@@ -17,7 +17,9 @@ public abstract class MyDatabase extends RoomDatabase {
                 context.getApplicationContext(),
                 MyDatabase.class,
                 "shoppinglist.db"
-            ).build();
+            )
+                    .fallbackToDestructiveMigration()
+                    .build();
         }
         return instance;
     }

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class AddNewItemActivity extends AppCompatActivity {
 
@@ -27,7 +28,10 @@ public class AddNewItemActivity extends AppCompatActivity {
         item.quantity = quantity;
         new Thread(() -> {
             MyDatabase.getInstance(this).shoppingListDao().insert(item);
-            runOnUiThread(this::finish);
+            runOnUiThread(() -> {
+                Toast.makeText(this, "New item saved", Toast.LENGTH_SHORT).show();
+                finish();
+            });
         }).start();
     }
 }

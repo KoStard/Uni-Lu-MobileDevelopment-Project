@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class EditItemActivity extends AppCompatActivity {
     private int itemId;
@@ -45,7 +46,10 @@ public class EditItemActivity extends AppCompatActivity {
         item.quantity = quantity;
         new Thread(() -> {
             MyDatabase.getInstance(this).shoppingListDao().update(item);
-            runOnUiThread(this::finish);
+            runOnUiThread(() -> {
+                Toast.makeText(this, "Item updated", Toast.LENGTH_SHORT).show();
+                finish();
+            });
         }).start();
     }
 }

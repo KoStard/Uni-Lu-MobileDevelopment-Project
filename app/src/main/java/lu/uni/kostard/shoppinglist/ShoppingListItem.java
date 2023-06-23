@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "shopping_list_item")
 public class ShoppingListItem {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     public int id;
     //    TODO: Null checks
     public String title;
