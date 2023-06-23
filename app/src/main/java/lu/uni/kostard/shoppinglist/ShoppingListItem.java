@@ -8,8 +8,21 @@ import androidx.room.PrimaryKey;
 public class ShoppingListItem {
     @PrimaryKey
     public int id;
-//    TODO: Null checks
+    //    TODO: Null checks
     public String title;
     public String description;
     public String quantity;
+
+    public ShoppingListItem() {
+    }
+
+    public ShoppingListItem(
+            @NonNull String title,
+            @NonNull String description,
+            @NonNull String quantity
+    ) {
+        this.title = title;
+        this.description = description;
+        this.quantity = quantity;
+    }
 }
