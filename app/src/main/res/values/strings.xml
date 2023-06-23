@@ -8,4 +8,5 @@
     <string name="add_or_edit_item_quantity_default_value">1</string>
     <string name="add_or_edit_item_details_hint">Details and description</string>
     <string name="add_item_button">Add</string>
+    <string name="edit_item_button">Update</string>
 </resources>

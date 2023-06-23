@@ -1,5 +1,7 @@
 package lu.uni.kostard.shoppinglist;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +15,11 @@ import java.util.List;
 public class ShoppingListRecyclerViewAdapter extends RecyclerView.Adapter<ShoppingListRecyclerViewAdapter.ViewHolder> {
 
     private List<ShoppingListItem> items;
+    private final Context context;
 
-    public ShoppingListRecyclerViewAdapter(List<ShoppingListItem> items) {
+    public ShoppingListRecyclerViewAdapter(List<ShoppingListItem> items, Context context) {
         this.items = items;
+        this.context = context;
     }
 
     @NonNull
@@ -33,6 +37,30 @@ public class ShoppingListRecyclerViewAdapter extends RecyclerView.Adapter<Shoppi
         holder.getTitleTextView().setText(item.title);
         holder.getDescriptionTextView().setText(item.description);
         holder.getQuantityTextView().setText(item.quantity);
+        holder.bind(this);
+    }
+
+    // Because we are using Room database with live data, the content of the recycler view is updated
+    public void deleteItem(int position) {
+        ShoppingListItem item = items.get(position);
+        new Thread(() -> {
+            MyDatabase.getInstance(context).shoppingListDao().delete(item);
+        }).start();
+    }
+
+    public void startEditItemActivity(int position) {
+        ShoppingListItem item = items.get(position);
+        Intent intent = new Intent(context, EditItemActivity.class);
+        intent.putExtra("itemId", item.id);
+        intent.putExtra("title", item.title);
+        intent.putExtra("description", item.description);
+        intent.putExtra("quantity", item.quantity);
+        context.startActivity(intent);
+    }
+
+    public void setItems(List<ShoppingListItem> items) {
+        this.items = items;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -56,6 +84,25 @@ public class ShoppingListRecyclerViewAdapter extends RecyclerView.Adapter<Shoppi
 
         public TextView getQuantityTextView() {
             return itemView.findViewById(R.id.listItemQuantity);
+        }
+
+        public void bind(ShoppingListRecyclerViewAdapter adapter) {
+            itemView.findViewById(R.id.deleteItemButton).setOnClickListener(v -> {
+                int position = getAdapterPosition();
+                if (position == RecyclerView.NO_POSITION) {
+                    return;
+                }
+                adapter.deleteItem(position);
+            });
+            itemView.findViewById(R.id.itemLinearLayout).setOnClickListener(v -> {
+                int position = getAdapterPosition();
+                if (position == RecyclerView.NO_POSITION) {
+                    return;
+                }
+                ShoppingListItem item = adapter.items.get(position);
+                System.out.println("Edit Item: " + item);
+                adapter.startEditItemActivity(position);
+            });
         }
     }
 }

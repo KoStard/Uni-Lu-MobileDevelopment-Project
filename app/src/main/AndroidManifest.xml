@@ -12,11 +12,13 @@
         android:theme="@style/Theme.AndroidShoppingList"
         tools:targetApi="31">
         <activity
+            android:name=".EditItemActivity"
+            android:exported="false" />
+        <activity
             android:name=".AddNewItemActivity"
             android:exported="false"
             android:label="@string/add_new_item_page_label"
-            android:parentActivityName=".MainActivity">
-        </activity>
+            android:parentActivityName=".MainActivity"></activity>
         <activity
             android:name=".MainActivity"
             android:exported="true"

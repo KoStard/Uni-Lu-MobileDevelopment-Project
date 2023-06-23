@@ -23,11 +23,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.shoppingListRecyclerView);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        ArrayList<ShoppingListItem> items = new ArrayList<>();
-        items.add(new ShoppingListItem("Milk", "1L", "1"));
-        items.add(new ShoppingListItem("Bread", "1kg", "2"));
-        items.add(new ShoppingListItem("Eggs", "6", "3"));
-        mAdapter = new ShoppingListRecyclerViewAdapter(items);
+        mAdapter = new ShoppingListRecyclerViewAdapter(new ArrayList<>(), this);
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -36,7 +32,8 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         MyDatabase.getInstance(this).shoppingListDao().getAllItems().observe(this, items -> {
 //            Use RecyclerView adapter to display items
-
+            System.out.println("Items: " + items);
+            mAdapter.setItems(items);
         });
     }
 
